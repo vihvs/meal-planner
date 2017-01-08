@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 import requests
+import tablib
 from decouple import config
 from yaml import load, Loader
 
@@ -20,4 +21,7 @@ for recipe in recipes:
     for ingredient in recipe['ingredients']:
         shopping_list[ingredient['name']] += ingredient['quantity']
 
-print(shopping_list)
+headers = ('ingredient', 'Quantity')
+csv_list = tablib.Dataset(*shopping_list.items(), headers=headers).csv
+
+print(csv_list)
